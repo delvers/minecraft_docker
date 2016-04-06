@@ -19,5 +19,8 @@ WORKDIR /minecraft/config
 ADD start.sh /
 RUN chmod +x /start.sh
 
+VOLUME "/minecraft/config/"
+
 EXPOSE    25565
+
 ENTRYPOINT ["/start.sh"]
