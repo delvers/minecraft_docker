@@ -1,6 +1,8 @@
 FROM alpine
 RUN apk add --update bash git openjdk8 && rm -rf /var/cache/apk/*
 
+# Dockerfile for latest spigot version
+
 # build spigot
 RUN mkdir /minecraft_build
 WORKDIR /minecraft_build
@@ -8,14 +10,14 @@ ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact
 #RUN /usr/bin/git config --global --unset core.autocrlf
 RUN java -jar BuildTools.jar
 
-RUN mkdir -p /minecraft/config
-RUN mv /minecraft_build/spigot-1.8.8.jar /minecraft/spigot.jar
-WORKDIR /minecraft/config
-
+# setup for production
+RUN mv /minecraft_build/spigot-*.jar /minecraft/spigot.jar
 RUN rm -R /minecraft_build
+
+RUN mkdir -p /minecraft/config
+WORKDIR /minecraft/config
 ADD start.sh /
 RUN chmod +x /start.sh
 
 EXPOSE    25565
 ENTRYPOINT ["/start.sh"]
-
