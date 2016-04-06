@@ -11,10 +11,10 @@ ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact
 RUN java -jar BuildTools.jar
 
 # setup for production
-RUN mv /minecraft_build/spigot-*.jar /minecraft/spigot.jar
+RUN mkdir -p /minecraft/config
+RUN mv /minecraft_build/spigot-*.jar /minecraft/spigot.jar 
 RUN rm -R /minecraft_build
 
-RUN mkdir -p /minecraft/config
 WORKDIR /minecraft/config
 ADD start.sh /
 RUN chmod +x /start.sh
